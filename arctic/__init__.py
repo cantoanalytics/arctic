@@ -1,5 +1,7 @@
 """ The Arctic TimeSeries and Tick store."""
 
+import pandas as pd
+
 from .arctic import Arctic, register_library_type
 from .arctic import VERSION_STORE, TICK_STORE, CHUNK_STORE
 from .store._ndarray_store import NdarrayStore
@@ -24,5 +26,6 @@ else:
 
 register_versioned_storage(PandasDataFrameStore)
 register_versioned_storage(PandasSeriesStore)
-register_versioned_storage(PandasPanelStore)
+if pd.__version__ <= "1.0.3":
+    register_versioned_storage(PandasPanelStore)
 register_versioned_storage(NdarrayStore)
